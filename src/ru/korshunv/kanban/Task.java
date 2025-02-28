@@ -3,17 +3,14 @@ package ru.korshunv.kanban;
 import java.util.Objects;
 
 public class Task {
-    private String name;
-    private String description;
-    private int id;
-    private TaskStatus taskStatus;
+    protected String name;
+    protected String description;
+    protected int id;
+    protected TaskStatus taskStatus;
 
-    public Task() {
-
-    }
-
-    public Task(String name, TaskStatus taskStatus) {
+    public Task(String name, String description, TaskStatus taskStatus) {
         this.name = name;
+        this.description = description;
         this.taskStatus = taskStatus;
     }
 

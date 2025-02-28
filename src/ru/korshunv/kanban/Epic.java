@@ -5,62 +5,35 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Epic extends Task {
-    private HashMap<Integer, Subtask> subtasks;
-    private int subtaskCount = 0;
+    private final List<Subtask> subtasks;
 
-    public Epic() {
-        init();
-    }
+    public Epic(String name, String description, TaskStatus taskStatus) {
+        super(name, description, taskStatus);
 
-    public Epic(String name, TaskStatus taskStatus) {
-        super(name, taskStatus);
-        init();
-    }
-
-    private void init() {
-        subtasks = new HashMap<>();
+        subtasks = new ArrayList<>();
         setTaskStatus(TaskStatus.NEW);
     }
 
     public void addSubtask(Subtask subtask) {
-        subtask.setId(++subtaskCount);
-        subtasks.put(subtask.getId(), subtask);
+        subtasks.add(subtask);
     }
 
-    public void updateSubtask(int id, Subtask subtask) {
-        if (Utils.isNumberNotZerosAndIsPositive(id)) {
-            subtasks.put(id, subtask);
-
-            if (subtask.getTaskStatus() == TaskStatus.IN_PROGRESS) {
-                setTaskStatus(TaskStatus.IN_PROGRESS);
-            } else if (subtask.getTaskStatus() == TaskStatus.DONE) {
-                int numberOfCompletedSubtasks = 0;
-                for (Subtask sub : subtasks.values()) {
-                    if (sub.getTaskStatus() == TaskStatus.DONE) {
-                        numberOfCompletedSubtasks++;
-                    }
-                }
-
-                if (numberOfCompletedSubtasks == subtasks.values().size()) {
-                    setTaskStatus(TaskStatus.DONE);
-                }
-            }
+    public void removeSubtask(Subtask subtask) {
+        if (subtask != null) {
+            subtasks.remove(subtask);
         }
     }
 
-    public Subtask getSubtaskOnId(int id) {
-        return subtasks.get(id);
-    }
+
+
+
+
 
     public List<Subtask> getListOfSubtasks() {
-        return new ArrayList<>(subtasks.values());
+        return subtasks;
     }
 
-    public void removeSubtask(int id) {
-        subtasks.remove(id);
-    }
 
-    public void clearSubtasks() {
-        subtasks.clear();
-    }
+
+
 }

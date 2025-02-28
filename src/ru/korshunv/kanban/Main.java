@@ -6,47 +6,48 @@ public class Main {
     private static final TaskManager taskManager = new TaskManager();
 
     public static void main(String[] args) {
-
+        runTest();
     }
 
     private static void runTest() {
         // Первая малая задача
-        taskManager.addTask(new Task("Убрать крвартиру.", TaskStatus.NEW));
-        taskManager.addTask(new Task("Поиграть с кошкой.", TaskStatus.NEW));
+        taskManager.addTask(new Task("Убрать крвартиру.", "", TaskStatus.NEW));
+        taskManager.addTask(new Task("Поиграть с кошкой.", "", TaskStatus.NEW));
 
         // Первая большая задача
-        Epic epic1 = new Epic("Поменять пробитое колесо на велосипеде.", TaskStatus.NEW);
-        epic1.addSubtask(new Subtask("Купить новую камеру.", TaskStatus.NEW));
-        epic1.addSubtask(new Subtask("Поменять колесо.", TaskStatus.NEW));
-
+        // Change a tire on a bike.
+        Epic epic1 = new Epic("Поменять пробитое колесо на велосипеде.", "", TaskStatus.NEW);
         taskManager.addEpic(epic1);
 
-        // Вторая большая задача
-        Epic epic2 = new Epic("Сходить в магазин.", TaskStatus.NEW);
-        epic2.addSubtask(new Subtask("Купить товары по списку.", TaskStatus.NEW));
+        taskManager.addSubtask(new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epic1.getId()));
+        taskManager.addSubtask(new Subtask("Поменять колесо.", "", TaskStatus.NEW, epic1.getId()));
 
+        // Вторая большая задача
+        Epic epic2 = new Epic("Сходить в магазин.", "", TaskStatus.NEW);
         taskManager.addEpic(epic2);
+
+        taskManager.addSubtask(new Subtask("Купить товары по списку.", "", TaskStatus.NEW, epic2.getId()));
 
         printAllTasks();
 
         // Обновляем данные
         taskManager.removeTask(1);
-        taskManager.updateTask(2, new Task("Выгулить собаку.", TaskStatus.NEW));
 
-        Epic epic = taskManager.getEpicOnId(1);
-        Subtask subtask1 = epic.getSubtaskOnId(1);
-        subtask1.setTaskStatus(TaskStatus.IN_PROGRESS);
+        Subtask subtask1 = taskManager.getSubtaskOnId(4);
+        subtask1.setTaskStatus(TaskStatus.DONE);
+        taskManager.updateSubtask(subtask1);
 
-        Subtask subtask2 = epic.getSubtaskOnId(2);
+        Subtask subtask2 = taskManager.getSubtaskOnId(5);
         subtask2.setTaskStatus(TaskStatus.DONE);
-        epic.updateSubtask(1, subtask1);
-        epic.updateSubtask(2, subtask2);
+        taskManager.updateSubtask(subtask2);
 
         printAllTasks();
 
         // Обновляем данные
-        subtask1.setTaskStatus(TaskStatus.DONE);
-        epic.updateSubtask(1, subtask1);
+        subtask2.setTaskStatus(TaskStatus.IN_PROGRESS);
+        taskManager.updateSubtask(subtask2);
+
+        taskManager.removeSubtask(subtask1.getId());
 
         printAllTasks();
     }
