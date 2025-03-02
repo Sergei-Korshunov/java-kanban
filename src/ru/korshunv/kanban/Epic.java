@@ -1,17 +1,15 @@
 package ru.korshunv.kanban;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Epic extends Task {
     private final List<Subtask> subtasks;
 
-    public Epic(String name, String description, TaskStatus taskStatus) {
-        super(name, description, taskStatus);
+    public Epic(String name, String description) {
+        super(name, description, TaskStatus.NEW);
 
         subtasks = new ArrayList<>();
-        setTaskStatus(TaskStatus.NEW);
     }
 
     public void addSubtask(Subtask subtask) {
@@ -24,16 +22,11 @@ public class Epic extends Task {
         }
     }
 
-
-
-
-
-
-    public List<Subtask> getListOfSubtasks() {
-        return subtasks;
+    public void clearSubtask() {
+        subtasks.clear();
     }
 
-
-
-
+    public List<Subtask> getListOfSubtasks() {
+        return new ArrayList<>(subtasks);
+    }
 }

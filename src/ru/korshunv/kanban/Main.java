@@ -15,15 +15,14 @@ public class Main {
         taskManager.addTask(new Task("Поиграть с кошкой.", "", TaskStatus.NEW));
 
         // Первая большая задача
-        // Change a tire on a bike.
-        Epic epic1 = new Epic("Поменять пробитое колесо на велосипеде.", "", TaskStatus.NEW);
+        Epic epic1 = new Epic("Поменять пробитое колесо на велосипеде.", "");
         taskManager.addEpic(epic1);
 
         taskManager.addSubtask(new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epic1.getId()));
         taskManager.addSubtask(new Subtask("Поменять колесо.", "", TaskStatus.NEW, epic1.getId()));
 
         // Вторая большая задача
-        Epic epic2 = new Epic("Сходить в магазин.", "", TaskStatus.NEW);
+        Epic epic2 = new Epic("Сходить в магазин.", ""); // id = 4
         taskManager.addEpic(epic2);
 
         taskManager.addSubtask(new Subtask("Купить товары по списку.", "", TaskStatus.NEW, epic2.getId()));
@@ -31,23 +30,11 @@ public class Main {
         printAllTasks();
 
         // Обновляем данные
-        taskManager.removeTask(1);
-
-        Subtask subtask1 = taskManager.getSubtaskOnId(4);
-        subtask1.setTaskStatus(TaskStatus.DONE);
-        taskManager.updateSubtask(subtask1);
-
-        Subtask subtask2 = taskManager.getSubtaskOnId(5);
-        subtask2.setTaskStatus(TaskStatus.DONE);
-        taskManager.updateSubtask(subtask2);
+        taskManager.removeSubtask(7);
 
         printAllTasks();
 
-        // Обновляем данные
-        subtask2.setTaskStatus(TaskStatus.IN_PROGRESS);
-        taskManager.updateSubtask(subtask2);
-
-        taskManager.removeSubtask(subtask1.getId());
+        taskManager.removeEpic(3);
 
         printAllTasks();
     }
@@ -64,6 +51,7 @@ public class Main {
 
         // Выводим большие задачи
         System.out.println("Список больших задач");
+        System.out.println("Список подзадач: " + taskManager.getListOfSubtasks());
         List<Epic> epics = taskManager.getListOfEpics();
         for (int i = 0; i < epics.size(); i++) {
             Epic epic = epics.get(i);
