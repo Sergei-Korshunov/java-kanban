@@ -18,11 +18,13 @@ public class Main {
         Epic epic1 = new Epic("Поменять пробитое колесо на велосипеде.", "");
         taskManager.addEpic(epic1);
 
-        taskManager.addSubtask(new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epic1.getId()));
-        taskManager.addSubtask(new Subtask("Поменять колесо.", "", TaskStatus.NEW, epic1.getId()));
+        Subtask s1 = new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epic1.getId());
+        Subtask s2 = new Subtask("Поменять колесо.", "", TaskStatus.NEW, epic1.getId());
+        taskManager.addSubtask(s1);
+        taskManager.addSubtask(s2);
 
         // Вторая большая задача
-        Epic epic2 = new Epic("Сходить в магазин.", ""); // id = 4
+        Epic epic2 = new Epic("Сходить в магазин.", "");
         taskManager.addEpic(epic2);
 
         taskManager.addSubtask(new Subtask("Купить товары по списку.", "", TaskStatus.NEW, epic2.getId()));
@@ -30,10 +32,6 @@ public class Main {
         printAllTasks();
 
         // Обновляем данные
-        taskManager.removeSubtask(7);
-
-        printAllTasks();
-
         taskManager.removeEpic(3);
 
         printAllTasks();
