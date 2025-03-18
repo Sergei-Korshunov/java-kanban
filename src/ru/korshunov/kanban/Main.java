@@ -1,9 +1,9 @@
-package ru.korshunv.kanban;
+package ru.korshunov.kanban;
 
 import java.util.List;
 
 public class Main {
-    private static final TaskManager taskManager = new TaskManager();
+    private static final TaskManager taskManager = Managers.getDefaultTaskManager();
 
     public static void main(String[] args) {
         runTest();
@@ -32,9 +32,16 @@ public class Main {
         printAllTasks();
 
         // Обновляем данные
-        taskManager.removeEpic(3);
+        taskManager.getTaskOnId(1);
+        taskManager.getTaskOnId(2);
+        taskManager.getEpicOnId(6);
 
-        printAllTasks();
+        System.out.println("History:");
+        for (int i = 0; i < taskManager.getHistory().size(); i++) {
+            System.out.println((i + 1) + " -> " + taskManager.getHistory().get(i));
+        }
+
+        // printAllTasks();
     }
 
     private static void printAllTasks() {

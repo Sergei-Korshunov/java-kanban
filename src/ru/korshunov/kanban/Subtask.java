@@ -1,4 +1,4 @@
-package ru.korshunv.kanban;
+package ru.korshunov.kanban;
 
 public class Subtask extends Task {
     private int epicId;

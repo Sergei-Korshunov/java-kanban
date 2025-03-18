@@ -1,4 +1,4 @@
-package ru.korshunv.kanban;
+package ru.korshunov.kanban;
 
 import java.util.Objects;
 
