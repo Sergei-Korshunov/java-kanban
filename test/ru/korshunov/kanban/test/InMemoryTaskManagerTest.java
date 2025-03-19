@@ -2,7 +2,12 @@ package ru.korshunov.kanban.test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.korshunov.kanban.*;
+import ru.korshunov.kanban.manager.InMemoryTaskManager;
+import ru.korshunov.kanban.manager.Managers;
+import ru.korshunov.kanban.task.Epic;
+import ru.korshunov.kanban.task.Subtask;
+import ru.korshunov.kanban.task.Task;
+import ru.korshunov.kanban.task.TaskStatus;
 
 import java.util.List;
 
@@ -162,6 +167,7 @@ class InMemoryTaskManagerTest {
         memoryTaskManager.getTaskOnId(taskNew10.getId());
 
         List<Task> history = memoryTaskManager.getHistory();
+        printHistory(history);
 
         assertEquals(taskNew5, task5);
 
@@ -169,6 +175,9 @@ class InMemoryTaskManagerTest {
         memoryTaskManager.addTask(taskNew11);
 
         Task task11 = memoryTaskManager.getTaskOnId(taskNew11.getId());
+
+        history = memoryTaskManager.getHistory();
+        printHistory(history);
 
         assertEquals(task11, history.get(history.size() - 1));
         assertNotEquals(taskNew1, history.get(0));
@@ -178,6 +187,17 @@ class InMemoryTaskManagerTest {
 
         Task task12 = memoryTaskManager.getTaskOnId(taskNew12.getId());
 
+        history = memoryTaskManager.getHistory();
+        printHistory(history);
+
         assertEquals(task12, history.get(history.size() - 1));
+    }
+
+    private void printHistory(List<Task> history) {
+        System.out.println("------------------------------------");
+        for (int i = 0; i < history.size(); i++) {
+            System.out.println((i + 1) + ". -> " + history.get(i));
+        }
+        System.out.println();
     }
 }

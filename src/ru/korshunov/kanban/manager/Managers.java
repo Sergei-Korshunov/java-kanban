@@ -1,4 +1,7 @@
-package ru.korshunov.kanban;
+package ru.korshunov.kanban.manager;
+
+import ru.korshunov.kanban.manager.history.HistoryManager;
+import ru.korshunov.kanban.manager.history.InMemoryHistoryManager;
 
 public class Managers {
 

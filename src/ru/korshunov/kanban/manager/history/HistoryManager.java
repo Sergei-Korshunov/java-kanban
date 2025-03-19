@@ -1,4 +1,6 @@
-package ru.korshunov.kanban;
+package ru.korshunov.kanban.manager.history;
+
+import ru.korshunov.kanban.task.Task;
 
 import java.util.List;
 

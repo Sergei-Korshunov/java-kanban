@@ -1,4 +1,10 @@
-package ru.korshunov.kanban;
+package ru.korshunov.kanban.manager;
+
+import ru.korshunov.kanban.manager.history.HistoryManager;
+import ru.korshunov.kanban.task.Epic;
+import ru.korshunov.kanban.task.Subtask;
+import ru.korshunov.kanban.task.Task;
+import ru.korshunov.kanban.task.TaskStatus;
 
 import java.util.*;
 

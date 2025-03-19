@@ -1,4 +1,4 @@
-package ru.korshunov.kanban;
+package ru.korshunov.kanban.task;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,9 +3,9 @@ package ru.korshunov.kanban.test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.korshunov.kanban.Epic;
-import ru.korshunov.kanban.Subtask;
-import ru.korshunov.kanban.TaskStatus;
+import ru.korshunov.kanban.task.Epic;
+import ru.korshunov.kanban.task.Subtask;
+import ru.korshunov.kanban.task.TaskStatus;
 
 import static org.junit.jupiter.api.Assertions.*;
 
