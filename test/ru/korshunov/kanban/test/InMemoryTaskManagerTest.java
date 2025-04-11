@@ -132,65 +132,57 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    void checkingHistoryForOverflow() {
+    void checkingOperationHistory() {
         Task taskNew1 = new Task("Новыя задача 1", "", TaskStatus.NEW);
-        Task taskNew2 = new Task("Новыя задача 2", "", TaskStatus.NEW);
-        Task taskNew3 = new Task("Новыя задача 3", "", TaskStatus.NEW);
-        Task taskNew4 = new Task("Новыя задача 4", "", TaskStatus.NEW);
-        Task taskNew5 = new Task("Новыя задача 5", "", TaskStatus.NEW);
-        Task taskNew6 = new Task("Новыя задача 6", "", TaskStatus.NEW);
-        Task taskNew7 = new Task("Новыя задача 7", "", TaskStatus.NEW);
-        Task taskNew8 = new Task("Новыя задача 8", "", TaskStatus.NEW);
-        Task taskNew9 = new Task("Новыя задача 9", "", TaskStatus.NEW);
-        Task taskNew10 = new Task("Новыя задача 10", "", TaskStatus.NEW);
-
         memoryTaskManager.addTask(taskNew1);
+
+        // Первая большая задача
+        Epic epicNew1 = new Epic("Поменять пробитое колесо на велосипеде.", "");
+        memoryTaskManager.addEpic(epicNew1);
+
+        Subtask subtask1 = new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epicNew1.getId());
+        Subtask subtask2 = new Subtask("Поменять колесо.", "", TaskStatus.NEW, epicNew1.getId());
+        memoryTaskManager.addSubtask(subtask1);
+        memoryTaskManager.addSubtask(subtask2);
+
+        // Вторая большая задача
+        Epic epicNew2 = new Epic("Сходить в магазин.", "");
+        memoryTaskManager.addEpic(epicNew2);
+
+        Task taskNew2 = new Task("Новыя задача 2", "", TaskStatus.NEW);
         memoryTaskManager.addTask(taskNew2);
+
+        Task taskNew3 = new Task("Новыя задача 3", "", TaskStatus.NEW);
         memoryTaskManager.addTask(taskNew3);
-        memoryTaskManager.addTask(taskNew4);
-        memoryTaskManager.addTask(taskNew5);
-        memoryTaskManager.addTask(taskNew6);
-        memoryTaskManager.addTask(taskNew7);
-        memoryTaskManager.addTask(taskNew8);
-        memoryTaskManager.addTask(taskNew9);
-        memoryTaskManager.addTask(taskNew10);
 
         memoryTaskManager.getTaskOnId(taskNew1.getId());
+        memoryTaskManager.getEpicOnId(epicNew1.getId());
+        memoryTaskManager.getEpicOnId(epicNew2.getId());
         memoryTaskManager.getTaskOnId(taskNew2.getId());
         memoryTaskManager.getTaskOnId(taskNew3.getId());
-        memoryTaskManager.getTaskOnId(taskNew4.getId());
-        Task task5 = memoryTaskManager.getTaskOnId(taskNew5.getId());
-        memoryTaskManager.getTaskOnId(taskNew6.getId());
-        memoryTaskManager.getTaskOnId(taskNew7.getId());
-        memoryTaskManager.getTaskOnId(taskNew8.getId());
-        memoryTaskManager.getTaskOnId(taskNew9.getId());
-        memoryTaskManager.getTaskOnId(taskNew10.getId());
 
         List<Task> history = memoryTaskManager.getHistory();
         printHistory(history);
 
-        assertEquals(taskNew5, task5);
+        memoryTaskManager.getTaskOnId(taskNew1.getId());
 
-        Task taskNew11 = new Task("Новыя задача 11", "", TaskStatus.NEW);
-        memoryTaskManager.addTask(taskNew11);
+        history = memoryTaskManager.getHistory();
+        printHistory(history);
+        assertEquals(taskNew1, history.get(history.size() - 1));
 
-        Task task11 = memoryTaskManager.getTaskOnId(taskNew11.getId());
+        memoryTaskManager.removeEpic(epicNew2.getId());
+        memoryTaskManager.removeTask(taskNew2.getId());
 
         history = memoryTaskManager.getHistory();
         printHistory(history);
 
-        assertEquals(task11, history.get(history.size() - 1));
-        assertNotEquals(taskNew1, history.get(0));
+        for (Task task : history) {
+            assertNotEquals(epicNew2, task);
+        }
 
-        Task taskNew12 = new Task("Новыя задача 12", "", TaskStatus.NEW);
-        memoryTaskManager.addTask(taskNew12);
-
-        Task task12 = memoryTaskManager.getTaskOnId(taskNew12.getId());
-
-        history = memoryTaskManager.getHistory();
-        printHistory(history);
-
-        assertEquals(task12, history.get(history.size() - 1));
+        for (Task task : history) {
+            assertNotEquals(taskNew2, task);
+        }
     }
 
     private void printHistory(List<Task> history) {

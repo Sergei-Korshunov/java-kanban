@@ -2,6 +2,7 @@ package ru.korshunov.kanban;
 
 import ru.korshunov.kanban.manager.Managers;
 import ru.korshunov.kanban.manager.TaskManager;
+import ru.korshunov.kanban.manager.history.InMemoryHistoryManager;
 import ru.korshunov.kanban.task.Epic;
 import ru.korshunov.kanban.task.Subtask;
 import ru.korshunov.kanban.task.Task;
@@ -13,7 +14,51 @@ public class Main {
     private static final TaskManager taskManager = Managers.getDefaultTaskManager();
 
     public static void main(String[] args) {
-        runTest();
+        InMemoryHistoryManager history = new InMemoryHistoryManager();
+        Task task1 = new Task("1", "", TaskStatus.NEW);
+        task1.setId(1);
+        Task task2 = new Task("2", "", TaskStatus.NEW);
+        task2.setId(2);
+        Task task3 = new Task("3", "", TaskStatus.NEW);
+        task3.setId(3);
+
+        Epic task4 = new Epic("4", "");
+        task4.setId(4);
+
+        history.add(task1);
+        history.add(task2);
+        history.add(task3);
+        history.add(task4);
+
+        history.remove(4);
+        history.remove(2);
+        history.remove(1);
+        history.remove(3);
+
+//        history.add(task3);
+//        history.add(task3);
+//        history.add(task2);
+//        history.add(task1);
+
+
+
+
+//        Task task4 = new Task("2", "", TaskStatus.NEW);
+//        task4.setId(2);
+//        history.add(task4);
+//
+//        Task task5 = new Task("1", "", TaskStatus.NEW);
+//        task5.setId(1);
+//
+//        history.add(task5);
+//
+//        Task task6 = new Task("2", "", TaskStatus.NEW);
+//        task6.setId(2);
+//
+//        history.add(task6);
+
+        System.out.println(history.getHistory());
+
     }
 
     private static void runTest() {

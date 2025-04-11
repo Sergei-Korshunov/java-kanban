@@ -14,6 +14,15 @@ public class Task {
         this.taskStatus = taskStatus;
     }
 
+    public Task(Task task) {
+        this(task.getName(), task.getDescription(), task.getId(), task.getTaskStatus());
+    }
+
+    protected Task(String name, String description, int id, TaskStatus taskStatus) {
+        this(name, description, taskStatus);
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
