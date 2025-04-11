@@ -2,7 +2,6 @@ package ru.korshunov.kanban;
 
 import ru.korshunov.kanban.manager.Managers;
 import ru.korshunov.kanban.manager.TaskManager;
-import ru.korshunov.kanban.manager.history.InMemoryHistoryManager;
 import ru.korshunov.kanban.task.Epic;
 import ru.korshunov.kanban.task.Subtask;
 import ru.korshunov.kanban.task.Task;
@@ -13,7 +12,9 @@ import java.util.List;
 public class Main {
     private static final TaskManager taskManager = Managers.getDefaultTaskManager();
 
-    public static void main(String[] args) {}
+    public static void main(String[] args) {
+
+    }
 
     private static void runTest() {
         // Первая малая задача
@@ -47,7 +48,7 @@ public class Main {
             System.out.println((i + 1) + " -> " + taskManager.getHistory().get(i));
         }
 
-        // printAllTasks();
+        printAllTasks();
     }
 
     private static void printAllTasks() {
