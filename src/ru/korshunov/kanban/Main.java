@@ -13,7 +13,29 @@ public class Main {
     private static final TaskManager taskManager = Managers.getDefaultTaskManager();
 
     public static void main(String[] args) {
+        taskManager.addTask(new Task("Покормить кота.", "", TaskStatus.NEW));
 
+        Epic epic1 = new Epic("Поменять пробитое колесо на велосипеде.", "");
+        taskManager.addEpic(epic1);
+
+        Subtask s1 = new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epic1.getId());
+        Subtask s2 = new Subtask("Поменять колесо.", "", TaskStatus.NEW, epic1.getId());
+        taskManager.addSubtask(s1);
+        taskManager.addSubtask(s2);
+
+        taskManager.getTaskOnId(1);
+        taskManager.getEpicOnId(2);
+        taskManager.getSubtaskOnId(3);
+
+        System.out.println(taskManager.getHistory());
+
+        taskManager.removeSubtask(3);
+
+        System.out.println(taskManager.getHistory());
+
+        taskManager.removeEpic(2);
+
+        System.out.println(taskManager.getHistory());
     }
 
     private static void runTest() {

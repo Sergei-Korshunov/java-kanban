@@ -33,10 +33,18 @@ public class InMemoryHistoryManager implements HistoryManager {
 
         if (prev == null) {
             head = next;
+
+            if (head != null) {
+                head.setPrev(null);
+            }
         }
 
         if (next == null) {
             tail = prev;
+
+            if (tail != null) {
+                tail.setNext(null);
+            }
         }
 
         if (prev != null && next != null) {
@@ -47,7 +55,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     private void linkLast(Task element) {
-        Node<Task> oldTail = tail;
+        final Node<Task> oldTail = tail;
         Node<Task> newNode = new Node<>(oldTail, element, null);
         tail = newNode;
 
@@ -63,7 +71,9 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        removeNode(nodes.get(id));
+        if (nodes.containsKey(id)) {
+            removeNode(nodes.get(id));
+        }
     }
 
     @Override
@@ -79,15 +89,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             if (node != null) {
                 Task task = node.getData();
                 if (task != null) {
-                    if (task instanceof Subtask) {
-                        Subtask subtask = (Subtask) task;
-                        tasks.add(new Subtask(subtask));
-                    } else if (task instanceof Epic) {
-                        Epic epic = (Epic) task;
-                        tasks.add(new Epic(epic));
-                    } else {
-                        tasks.add(new Task(task));
-                    }
+                    tasks.add(task);
 
                     node = node.getNext();
                 }
