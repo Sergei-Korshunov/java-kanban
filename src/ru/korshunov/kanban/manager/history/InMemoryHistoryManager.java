@@ -1,8 +1,6 @@
 package ru.korshunov.kanban.manager.history;
 
 import ru.korshunov.kanban.Node;
-import ru.korshunov.kanban.task.Epic;
-import ru.korshunov.kanban.task.Subtask;
 import ru.korshunov.kanban.task.Task;
 
 import java.util.*;
