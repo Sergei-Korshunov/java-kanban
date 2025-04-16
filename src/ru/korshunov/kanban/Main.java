@@ -29,11 +29,7 @@ public class Main {
 
         System.out.println(taskManager.getHistory());
 
-        taskManager.removeSubtask(3);
-
-        System.out.println(taskManager.getHistory());
-
-        taskManager.removeEpic(2);
+        taskManager.clearSubtasks();
 
         System.out.println(taskManager.getHistory());
     }
