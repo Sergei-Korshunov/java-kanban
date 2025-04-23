@@ -9,11 +9,11 @@ import ru.korshunov.kanban.task.TaskStatus;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> tasks;
-    private final Map<Integer, Epic> epics;
-    private final Map<Integer, Subtask> subtasks;
+    protected final Map<Integer, Task> tasks;
+    protected final Map<Integer, Epic> epics;
+    protected final Map<Integer, Subtask> subtasks;
     private final HistoryManager historyManager;
-    private int taskCount = 0;
+    private int taskId = 0;
 
     public InMemoryTaskManager() {
         tasks = new HashMap<>();
@@ -24,13 +24,13 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
-        task.setId(++taskCount);
+        task.setId(++taskId);
         tasks.put(task.getId(), task);
     }
 
     @Override
     public void addEpic(Epic epic) {
-        epic.setId(++taskCount);
+        epic.setId(++taskId);
         epics.put(epic.getId(), epic);
     }
 
@@ -38,7 +38,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void addSubtask(Subtask subtask) {
         Epic epicFromCollection = epics.get(subtask.getEpicId());
         if (epicFromCollection != null) {
-            subtask.setId(++taskCount);
+            subtask.setId(++taskId);
 
             epicFromCollection.addSubtask(subtask);
             subtasks.put(subtask.getId(), subtask);
@@ -116,6 +116,14 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
+    }
+
+    protected int getTaskId() {
+        return taskId;
+    }
+
+    protected void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 
     @Override

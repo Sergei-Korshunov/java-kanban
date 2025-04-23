@@ -1,5 +1,6 @@
 package ru.korshunov.kanban;
 
+import ru.korshunov.kanban.manager.FileBackedTaskManager;
 import ru.korshunov.kanban.manager.Managers;
 import ru.korshunov.kanban.manager.TaskManager;
 import ru.korshunov.kanban.task.Epic;
@@ -7,34 +8,20 @@ import ru.korshunov.kanban.task.Subtask;
 import ru.korshunov.kanban.task.Task;
 import ru.korshunov.kanban.task.TaskStatus;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public class Main {
+    private static final Path PATH_TO_TASK_FILE = Path.of("task.txt");
     private static final TaskManager taskManager = Managers.getDefaultTaskManager();
+    private static final FileBackedTaskManager fileTaskManager = new FileBackedTaskManager(PATH_TO_TASK_FILE);
 
     public static void main(String[] args) {
-        taskManager.addTask(new Task("Покормить кота.", "", TaskStatus.NEW));
-
-        Epic epic1 = new Epic("Поменять пробитое колесо на велосипеде.", "");
-        taskManager.addEpic(epic1);
-
-        Subtask s1 = new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epic1.getId());
-        Subtask s2 = new Subtask("Поменять колесо.", "", TaskStatus.NEW, epic1.getId());
-        taskManager.addSubtask(s1);
-        taskManager.addSubtask(s2);
-
-        taskManager.getTaskOnId(1);
-        taskManager.getEpicOnId(2);
-        taskManager.getSubtaskOnId(3);
-
-        System.out.println(taskManager.getHistory());
-
-        taskManager.clearSubtasks();
-
-        System.out.println(taskManager.getHistory());
+        runTestForFileTaskManagerSave();
+        runTestForFileTaskManagerRead();
     }
 
-    private static void runTest() {
+    private static void runTestForTaskManager() {
         // Первая малая задача
         taskManager.addTask(new Task("Убрать крвартиру.", "", TaskStatus.NEW));
         taskManager.addTask(new Task("Поиграть с кошкой.", "", TaskStatus.NEW));
@@ -96,5 +83,28 @@ public class Main {
             }
             System.out.println();
         }
+    }
+
+    private static void runTestForFileTaskManagerSave() {
+        fileTaskManager.addTask(new Task("Убрать крвартиру.", " ", TaskStatus.NEW));
+
+        Epic epic1 = new Epic("Поменять пробитое колесо на велосипеде.", " ");
+        fileTaskManager.addEpic(epic1);
+
+        Subtask s1 = new Subtask("Купить новую камеру.", " ", TaskStatus.NEW, epic1.getId());
+        Subtask s2 = new Subtask("Поменять колесо.", " ", TaskStatus.NEW, epic1.getId());
+        fileTaskManager.addSubtask(s1);
+        fileTaskManager.addSubtask(s2);
+    }
+
+    private static void runTestForFileTaskManagerRead() {
+        FileBackedTaskManager fileTaskManager = FileBackedTaskManager.loadFromFile(PATH_TO_TASK_FILE);
+
+        System.out.println("List Task: " + fileTaskManager.getListOfTask());
+        System.out.println("List Epic: " + fileTaskManager.getListOfEpics());
+        System.out.println("List Subtask: " + fileTaskManager.getListOfSubtasks());
+
+        Task task = new Task(" ", " ", TaskStatus.NEW);
+        fileTaskManager.addTask(task);
     }
 }

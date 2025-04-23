@@ -18,6 +18,16 @@ public class Epic extends Task {
         subtasks = epic.getListOfSubtasks();
     }
 
+    protected Epic(String name, String description, int id, TaskStatus taskStatus) {
+        super(name, description, id, taskStatus);
+
+        subtasks = new ArrayList<>();
+    }
+
+    public static Epic getInstance(int id, String name, TaskStatus taskStatus, String description) {
+        return new Epic(name, description, id, taskStatus);
+    }
+
     public void addSubtask(Subtask subtask) {
         subtasks.add(subtask);
     }
