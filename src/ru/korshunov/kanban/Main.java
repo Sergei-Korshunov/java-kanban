@@ -104,6 +104,10 @@ public class Main {
         System.out.println("List Epic: " + fileTaskManager.getListOfEpics());
         System.out.println("List Subtask: " + fileTaskManager.getListOfSubtasks());
 
+        Epic epic = fileTaskManager.getListOfEpics().get(0);
+        if (epic != null)
+            System.out.println("Epic subtask: " + epic.getListOfSubtasks());
+
         Task task = new Task(" ", " ", TaskStatus.NEW);
         fileTaskManager.addTask(task);
     }

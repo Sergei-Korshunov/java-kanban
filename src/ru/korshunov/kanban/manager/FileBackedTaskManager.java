@@ -1,5 +1,6 @@
 package ru.korshunov.kanban.manager;
 
+import ru.korshunov.kanban.exception.ManagerReadException;
 import ru.korshunov.kanban.exception.ManagerSaveException;
 import ru.korshunov.kanban.task.Epic;
 import ru.korshunov.kanban.task.Subtask;
@@ -34,6 +35,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     fileTaskManager.epics.put(id, (Epic) task);
                 } else if (task instanceof Subtask) {
                     fileTaskManager.subtasks.put(id, (Subtask) task);
+
+                    fileTaskManager.fillEpicWithSubtasks((Subtask) task);
                 } else {
                     fileTaskManager.tasks.put(id, task);
                 }
@@ -45,10 +48,17 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
             fileTaskManager.setTaskId(lastTaskId);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ManagerReadException("Ошибка чтения данных из файла.", e);
         }
 
         return fileTaskManager;
+    }
+
+    private void fillEpicWithSubtasks(Subtask subtask) {
+        Epic epic = epics.get(subtask.getEpicId());
+        if (epic != null) {
+            epic.addSubtask(subtask);
+        }
     }
 
     protected Task fromString(String value) {
@@ -99,11 +109,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 fileWriter.write(toString(subtask));
             }
         } catch (IOException e) {
-            try {
                 throw new ManagerSaveException("Ошибка сохранения данных в файл.", e);
-            } catch (ManagerSaveException managerSaveException) {
-                managerSaveException.printStackTrace();
-            }
         }
     }
 
