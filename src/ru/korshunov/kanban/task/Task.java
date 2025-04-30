@@ -23,6 +23,10 @@ public class Task {
         this.id = id;
     }
 
+    public static Task getInstance(int id, String name, TaskStatus taskStatus, String description) {
+        return new Task(name, description, id, taskStatus);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -41,7 +45,7 @@ public class Task {
         return "Task {" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", uuid=" + id +
+                ", id=" + id +
                 ", taskStatus=" + taskStatus +
                 '}';
     }
