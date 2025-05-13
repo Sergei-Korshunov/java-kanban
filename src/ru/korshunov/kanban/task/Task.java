@@ -1,5 +1,7 @@
 package ru.korshunov.kanban.task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -7,24 +9,28 @@ public class Task {
     protected String description;
     protected int id;
     protected TaskStatus taskStatus;
+    protected LocalDateTime startTime;
+    protected Duration duration;
 
-    public Task(String name, String description, TaskStatus taskStatus) {
+    public Task(String name, String description, TaskStatus taskStatus, LocalDateTime startTime, Duration duration) {
         this.name = name;
         this.description = description;
         this.taskStatus = taskStatus;
+        this.startTime = startTime;
+        this.duration = duration;
     }
 
     public Task(Task task) {
-        this(task.getName(), task.getDescription(), task.getId(), task.getTaskStatus());
+        this(task.getName(), task.getDescription(), task.getId(), task.getTaskStatus(), task.getStartTime(), task.getDuration());
     }
 
-    protected Task(String name, String description, int id, TaskStatus taskStatus) {
-        this(name, description, taskStatus);
+    protected Task(String name, String description, int id, TaskStatus taskStatus, LocalDateTime startTime, Duration duration) {
+        this(name, description, taskStatus, startTime, duration);
         this.id = id;
     }
 
-    public static Task getInstance(int id, String name, TaskStatus taskStatus, String description) {
-        return new Task(name, description, id, taskStatus);
+    public static Task getInstance(int id, String name, TaskStatus taskStatus, String description, LocalDateTime startTime, Duration duration) {
+        return new Task(name, description, id, taskStatus, startTime, duration);
     }
 
     @Override
@@ -80,5 +86,25 @@ public class Task {
 
     public void setTaskStatus(TaskStatus taskStatus) {
         this.taskStatus = taskStatus;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plus(duration);
     }
 }
