@@ -10,7 +10,7 @@ public class Epic extends Task {
     private LocalDateTime endTime;
 
     public Epic(String name, String description) {
-        super(name, description, TaskStatus.NEW, LocalDateTime.MIN, Duration.ZERO);
+        super(name, description, TaskStatus.NEW, null, Duration.ZERO);
 
         subtasks = new ArrayList<>();
     }
@@ -22,7 +22,7 @@ public class Epic extends Task {
     }
 
     protected Epic(String name, String description, int id, TaskStatus taskStatus) {
-        super(name, description, id, taskStatus, LocalDateTime.MIN, Duration.ZERO);
+        super(name, description, id, taskStatus, null, Duration.ZERO);
 
         subtasks = new ArrayList<>();
     }
