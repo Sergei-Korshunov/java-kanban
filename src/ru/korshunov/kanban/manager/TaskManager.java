@@ -5,6 +5,7 @@ import ru.korshunov.kanban.task.Subtask;
 import ru.korshunov.kanban.task.Task;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TaskManager {
     void addTask(Task task);
@@ -20,6 +21,8 @@ public interface TaskManager {
     void updateSubtask(Subtask subtask);
 
     List<Task> getHistory();
+
+    Set<Task> getPrioritizedTasks();
 
     Task getTaskOnId(int id);
 

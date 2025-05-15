@@ -10,6 +10,8 @@ import ru.korshunov.kanban.task.TaskStatus;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
@@ -69,15 +71,17 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = objectData[2];
         TaskStatus taskStatus = TaskStatus.valueOf(objectData[3]);
         String description = objectData[4];
-        int epicId = objectData.length == 6 ? Integer.parseInt(objectData[5]) : 0;
+        LocalDateTime startTime = LocalDateTime.parse(objectData[5]);
+        Duration duration = Duration.parse(objectData[6]);
+        int epicId = objectData.length == 8 ? Integer.parseInt(objectData[7]) : 0;
 
         switch (typeTask) {
             case TASK:
-                return Task.getInstance(id, name, taskStatus, description);
+                return Task.getInstance(id, name, taskStatus, description, startTime, duration);
             case EPIC:
                 return Epic.getInstance(id, name, taskStatus, description);
             case SUBTASK:
-                return Subtask.getInstance(id, name, taskStatus, description, epicId);
+                return Subtask.getInstance(id, name, taskStatus, description, epicId, startTime, duration);
             default:
                 return null;
         }
@@ -92,7 +96,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             }
         }
 
-        String head = "id,type,name,status,description,epic\n";
+        String head = "id,type,name,status,description,start time,duration,epic\n";
 
         try (FileWriter fileWriter = new FileWriter(path.toFile(), false)) {
             fileWriter.write(head);
@@ -125,11 +129,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             epicId = ((Subtask) task).getEpicId();
         }
 
+
         sb.append(task.getId()).append(",");
         sb.append(typeTask).append(",");
         sb.append(task.getName()).append(",");
         sb.append(task.getTaskStatus()).append(",");
-        sb.append(task.getDescription());
+        sb.append(task.getDescription()).append(",");
+        sb.append(task.getStartTime()).append(",");
+        sb.append(task.getDuration());
 
         if (epicId != -1) {
             sb.append(",");

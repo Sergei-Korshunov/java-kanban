@@ -20,7 +20,7 @@ class EpicTest {
 
     @BeforeEach
     void addSubtaskInTheEpicList() {
-        subtask = new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epic.getId());
+        subtask = new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epic.getId(), null, null);
         epic.addSubtask(subtask);
     }
 

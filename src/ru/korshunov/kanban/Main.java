@@ -9,6 +9,9 @@ import ru.korshunov.kanban.task.Task;
 import ru.korshunov.kanban.task.TaskStatus;
 
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class Main {
@@ -18,20 +21,20 @@ public class Main {
 
     public static void main(String[] args) {
         runTestForFileTaskManagerSave();
-        runTestForFileTaskManagerRead();
+        runTestForTaskManager();
     }
 
     private static void runTestForTaskManager() {
         // Первая малая задача
-        taskManager.addTask(new Task("Убрать крвартиру.", "", TaskStatus.NEW));
-        taskManager.addTask(new Task("Поиграть с кошкой.", "", TaskStatus.NEW));
+        taskManager.addTask(new Task("Убрать крвартиру.", "", TaskStatus.NEW, LocalDateTime.of(2025, 5, 13, 12, 15), Duration.of(20, ChronoUnit.MINUTES)));
+        taskManager.addTask(new Task("Поиграть с кошкой.", "", TaskStatus.NEW, LocalDateTime.of(2025, 5, 13, 13, 15), Duration.of(20, ChronoUnit.MINUTES)));
 
         // Первая большая задача
         Epic epic1 = new Epic("Поменять пробитое колесо на велосипеде.", "");
         taskManager.addEpic(epic1);
 
-        Subtask s1 = new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epic1.getId());
-        Subtask s2 = new Subtask("Поменять колесо.", "", TaskStatus.NEW, epic1.getId());
+        Subtask s1 = new Subtask("Купить новую камеру.", "", TaskStatus.NEW, epic1.getId(), LocalDateTime.of(2025, 5, 13, 14, 15), Duration.of(20, ChronoUnit.MINUTES));
+        Subtask s2 = new Subtask("Поменять колесо.", "", TaskStatus.NEW, epic1.getId(), LocalDateTime.of(2025, 5, 13, 15, 15), Duration.of(20, ChronoUnit.MINUTES));
         taskManager.addSubtask(s1);
         taskManager.addSubtask(s2);
 
@@ -39,7 +42,7 @@ public class Main {
         Epic epic2 = new Epic("Сходить в магазин.", "");
         taskManager.addEpic(epic2);
 
-        taskManager.addSubtask(new Subtask("Купить товары по списку.", "", TaskStatus.NEW, epic2.getId()));
+        taskManager.addSubtask(new Subtask("Купить товары по списку.", "", TaskStatus.NEW, epic2.getId(), LocalDateTime.of(2025, 5, 13, 16, 15), Duration.of(20, ChronoUnit.MINUTES)));
 
         printAllTasks();
 
@@ -86,13 +89,13 @@ public class Main {
     }
 
     private static void runTestForFileTaskManagerSave() {
-        fileTaskManager.addTask(new Task("Убрать крвартиру.", " ", TaskStatus.NEW));
+        fileTaskManager.addTask(new Task("Убрать крвартиру.", " ", TaskStatus.NEW, LocalDateTime.now(), Duration.of(20, ChronoUnit.MINUTES)));
 
         Epic epic1 = new Epic("Поменять пробитое колесо на велосипеде.", " ");
         fileTaskManager.addEpic(epic1);
 
-        Subtask s1 = new Subtask("Купить новую камеру.", " ", TaskStatus.NEW, epic1.getId());
-        Subtask s2 = new Subtask("Поменять колесо.", " ", TaskStatus.NEW, epic1.getId());
+        Subtask s1 = new Subtask("Купить новую камеру.", " ", TaskStatus.NEW, epic1.getId(), LocalDateTime.of(2025, 5, 13, 15, 15), Duration.of(20, ChronoUnit.MINUTES));
+        Subtask s2 = new Subtask("Поменять колесо.", " ", TaskStatus.NEW, epic1.getId(), LocalDateTime.of(2025, 5, 13, 16, 15), Duration.of(20, ChronoUnit.MINUTES));
         fileTaskManager.addSubtask(s1);
         fileTaskManager.addSubtask(s2);
     }
@@ -108,7 +111,7 @@ public class Main {
         if (epic != null)
             System.out.println("Epic subtask: " + epic.getListOfSubtasks());
 
-        Task task = new Task(" ", " ", TaskStatus.NEW);
+        Task task = new Task(" ", " ", TaskStatus.NEW, LocalDateTime.now(), Duration.of(20, ChronoUnit.MINUTES));
         fileTaskManager.addTask(task);
     }
 }
