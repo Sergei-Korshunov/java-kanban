@@ -21,7 +21,21 @@
           <root url="jar://$MODULE_DIR$/lib/junit-platform-engine-1.4.2.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.ideaLibSources/junit-jupiter-api-5.4.2-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ideaLibSources/junit-jupiter-api-5.4.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/gson-2.13.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.ideaLibSources/gson-2.13.1-sources.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>
