@@ -11,6 +11,7 @@ import ru.korshunov.kanban.task.Subtask;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 
 public class SubtasksHandler extends BaseHandler implements HttpHandler {
 
@@ -54,7 +55,7 @@ public class SubtasksHandler extends BaseHandler implements HttpHandler {
                 if (subtask.getId() == 0) {
                     try {
                         taskManager.addSubtask(subtask);
-                        responseCode201(exchange);
+                        responseCode201(exchange, gson.toJson(Map.of("id", subtask.getId())));
                     } catch (IllegalArgumentException e) {
                         responseHasAnIntersection(exchange, subtask.getName());
                     }

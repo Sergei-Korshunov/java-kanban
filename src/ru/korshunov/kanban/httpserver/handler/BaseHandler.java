@@ -27,6 +27,14 @@ public class BaseHandler {
         exchange.close();
     }
 
+    protected void responseCode201(HttpExchange exchange, String text) throws IOException {
+        byte[] response = text.getBytes(StandardCharsets.UTF_8);
+        exchange.getResponseHeaders().add("Content-Type", "application/json;charset=utf-8");
+        exchange.sendResponseHeaders(201, response.length);
+        exchange.getResponseBody().write(response);
+        exchange.close();
+    }
+
     protected void responseNotFound(HttpExchange exchange) throws IOException {
         byte[] response = "Ресурс не найден".getBytes(StandardCharsets.UTF_8);
         exchange.getResponseHeaders().add("Content-Type", "application/json;charset=utf-8");

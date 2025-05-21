@@ -20,6 +20,7 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -119,6 +120,7 @@ public class HttpTaskManagerTasksTest {
         assertNotNull(tasksFromManager, "Задачи не возвращаются");
         assertEquals(1, tasksFromManager.size(), "Некорректное количество задач");
         assertEquals("Здача 1", tasksFromManager.get(0).getName(), "Некорректное имя задачи");
+        assertEquals(Map.of("id", 1), gson.fromJson(response.body(), new TypeTokenHashMap().getType()));
     }
 
     @Test

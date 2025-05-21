@@ -11,6 +11,7 @@ import ru.korshunov.kanban.task.Epic;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 
 public class EpicsHandler extends BaseHandler implements HttpHandler {
 
@@ -61,7 +62,7 @@ public class EpicsHandler extends BaseHandler implements HttpHandler {
 
                 if (epic.getId() == 0) {
                     taskManager.addEpic(epic);
-                    responseCode201(exchange);
+                    responseCode201(exchange, gson.toJson(Map.of("id", epic.getId())));
                 } else {
                     try {
                         taskManager.updateEpic(epic);
