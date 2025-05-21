@@ -38,6 +38,11 @@ public class HttpTaskManagerTasksTest {
         taskManager.clearSubtasks();
         taskManager.clearEpics();
         kanbanServer.start();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @AfterEach
@@ -134,19 +139,7 @@ public class HttpTaskManagerTasksTest {
                 "\t\t\"description\": \"Описание для обновления задачи №1\",\n" +
                 "\t\t\"id\": 1,\n" +
                 "\t\t\"taskStatus\": \"NEW\",\n" +
-                "\t\t\"startTime\": {\n" +
-                "\t\t\t\"date\": {\n" +
-                "\t\t\t\t\"year\": 2025,\n" +
-                "\t\t\t\t\"month\": 5,\n" +
-                "\t\t\t\t\"day\": 16\n" +
-                "\t\t\t},\n" +
-                "\t\t\t\"time\": {\n" +
-                "\t\t\t\t\"hour\": 20,\n" +
-                "\t\t\t\t\"minute\": 55,\n" +
-                "\t\t\t\t\"second\": 50,\n" +
-                "\t\t\t\t\"nano\": 742588600\n" +
-                "\t\t\t}\n" +
-                "\t\t},\n" +
+                "\t\t\"startTime\": \"2025-05-21T08:33:33.796209100\",\n" +
                 "\t\t\"duration\": {\n" +
                 "\t\t\t\"seconds\": 600,\n" +
                 "\t\t\t\"nanos\": 0\n" +
