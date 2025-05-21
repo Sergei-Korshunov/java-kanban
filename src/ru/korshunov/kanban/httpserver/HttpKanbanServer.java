@@ -3,6 +3,7 @@ package ru.korshunov.kanban.httpserver;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpServer;
 
+import ru.korshunov.kanban.adapter.DurationTypeAdapter;
 import ru.korshunov.kanban.adapter.LocalDateTimeTypeAdapter;
 import ru.korshunov.kanban.httpserver.handler.*;
 import ru.korshunov.kanban.manager.Managers;
@@ -10,6 +11,7 @@ import ru.korshunov.kanban.manager.TaskManager;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class HttpKanbanServer {
@@ -38,6 +40,7 @@ public class HttpKanbanServer {
     public static Gson getGson() {
         return gson.newBuilder()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+                .registerTypeAdapter(Duration.class, new DurationTypeAdapter())
                 .create();
     }
 

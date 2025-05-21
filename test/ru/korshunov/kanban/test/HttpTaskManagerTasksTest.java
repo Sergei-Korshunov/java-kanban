@@ -139,11 +139,8 @@ public class HttpTaskManagerTasksTest {
                 "\t\t\"description\": \"Описание для обновления задачи №1\",\n" +
                 "\t\t\"id\": 1,\n" +
                 "\t\t\"taskStatus\": \"NEW\",\n" +
-                "\t\t\"startTime\": \"2025-05-21T08:33:33.796209100\",\n" +
-                "\t\t\"duration\": {\n" +
-                "\t\t\t\"seconds\": 600,\n" +
-                "\t\t\t\"nanos\": 0\n" +
-                "\t\t}\n" +
+                "\t\t\"startTime\": \"2025-05-21T08:51:33.019775200\",\n" +
+                "\t\t\"duration\": 600\n" +
                 "\t}";
 
 
